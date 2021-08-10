@@ -1,0 +1,1 @@
+![log update](blue-badge-folder-setup/workout-logbook/server/assets/bbWorkoutLog - log-update.png)
