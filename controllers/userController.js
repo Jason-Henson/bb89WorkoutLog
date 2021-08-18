@@ -6,10 +6,10 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs'); 
 
 /* ******************
- *** USER CREATE ***
+ *** USER REGISTER ***
 ******************* */ 
 
-router.post('/create', (req, res) => {
+router.post('/register', (req, res) => {
 
     User.create({
         email: req.body.user.email,
@@ -30,7 +30,7 @@ router.post('/create', (req, res) => {
 });
 
 /* ******************
- *** USER SIGNIN ***
+ *** USER LOGIN ***
 ******************* */ 
 
 router.post('/login', (req, res) => {

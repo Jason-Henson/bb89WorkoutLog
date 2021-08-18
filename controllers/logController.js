@@ -35,23 +35,23 @@ router.get('/', (req, res) => {
         .catch(err => res.status(500).json({ error: err }))
 });
 /* **************************
-*** GET ENTRIES BY USER ***
+*** Removing based on feedback from Rob ***
 *************************** */
-router.get('/mine', validateSession, (req, res) => {
-    let userid = req.user.id
-    Log.findAll({
-        where: { owner_id: userid }
-    })
-    .then(logs => res.status(200).json(logs))
-    .catch(err => res.status(500).json({ error: err }))
-});
+// router.get('/mine', validateSession, (req, res) => {
+//     let userid = req.user.id
+//     Log.findAll({
+//         where: { owner_id: userid }
+//     })
+//     .then(logs => res.status(200).json(logs))
+//     .catch(err => res.status(500).json({ error: err }))
+// });
 
 /* **************************************
 *** GET ENTRIES BY USER AND ENTRY ID ***
 ************************************** */
-router.get('/:entryId', validateSession, (req, res) => {
+router.get('/:id', validateSession, (req, res) => {
     Log.findOne({
-        where: { owner_id: req.user.id, id: req.params.entryId }
+        where: { id: req.params.id }
     })
     .then(logs => res.status(200).json(logs))
     .catch(err => res.status(500).json({ error: err }))
@@ -60,14 +60,14 @@ router.get('/:entryId', validateSession, (req, res) => {
 /* **************************
 *** UPDATE ENTRIES ***
 *************************** */
-router.put('/update/:entryId', validateSession, (req, res) => {
+router.put('/:id', validateSession, (req, res) => {
     const updateLogEntry = {
         description: req.body.log.description,
         definition: req.body.log.definition,
         result: req.body.log.result,
     };
 
-    const query = { where: { id: req.params.entryId, owner_id: req.user.id}}
+    const query = { where: { id: req.params.id }}
 
     Log.update(updateLogEntry, query)
     .then((logs) => res.status(200).json(logs))
@@ -77,7 +77,7 @@ router.put('/update/:entryId', validateSession, (req, res) => {
 /* **************************
 *** DELETE ENTRIES ***
 *************************** */
-router.delete('/delete/:id', validateSession, (req, res) => {
+router.delete('/:id', validateSession, (req, res) => {
     const query = { where: { id: req.params.id, owner_id: req.user.id } }
 
     Log.destroy(query)
