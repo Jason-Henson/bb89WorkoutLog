@@ -14,7 +14,7 @@ router.get('/test2', validateSession, (req, res) => {
 /* **************************
 *** LOG CREATE ***
 *************************** */
-router.post('/create', validateSession, (req, res) => {
+router.post('/', validateSession, (req, res) => {
     const logEntry = {
         description: req.body.log.description,
         definition: req.body.log.definition,
@@ -29,22 +29,22 @@ router.post('/create', validateSession, (req, res) => {
 /* **************************
 *** GET ALL ENTRIES ***
 *************************** */
-router.get('/', (req, res) => {
-    Log.findAll()
-        .then(logs => res.status(200).json(logs))
-        .catch(err => res.status(500).json({ error: err }))
-});
+// router.get('/', (req, res) => {
+//     Log.findAll()
+//         .then(logs => res.status(200).json(logs))
+//         .catch(err => res.status(500).json({ error: err }))
+// });
 /* **************************
 *** Removing based on feedback from Rob ***
 *************************** */
-// router.get('/mine', validateSession, (req, res) => {
-//     let userid = req.user.id
-//     Log.findAll({
-//         where: { owner_id: userid }
-//     })
-//     .then(logs => res.status(200).json(logs))
-//     .catch(err => res.status(500).json({ error: err }))
-// });
+router.get('/', validateSession, (req, res) => {
+    let userid = req.user.id
+    Log.findAll({
+        where: { owner_id: userid }
+    })
+    .then(logs => res.status(200).json(logs))
+    .catch(err => res.status(500).json({ error: err }))
+});
 
 /* **************************************
 *** GET ENTRIES BY USER AND ENTRY ID ***
